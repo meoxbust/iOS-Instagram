@@ -1,4 +1,3 @@
-import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import * as React from "react";
 
@@ -16,6 +15,7 @@ import rootReducer from "./redux/reducers"
 import thunk from "redux-thunk";
 import {auth} from "./components/config/firebaseConfig";
 import AddScreen from "./components/main/Add";
+import SaveScreen from "./components/main/Save";
 
 
 const store = createStore(rootReducer, applyMiddleware(thunk))
@@ -88,6 +88,11 @@ export class App extends Component{
                         <Stack.Screen
                             name="Add"
                             component={AddScreen}
+                            navigation={this.props.navigation}
+                        />
+                        <Stack.Screen
+                            name="Save"
+                            component={SaveScreen}
                         />
                     </Stack.Navigator>
                 </NavigationContainer>
