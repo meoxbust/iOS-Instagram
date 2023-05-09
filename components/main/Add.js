@@ -7,7 +7,6 @@ export default function App() {
     const [permission, requestPermission] = Camera.useCameraPermissions();
     const [camera, setCamera] = useState(null);
     const [imageTaken, setImageTaken] = useState(null);
-    const [image, setImage] = useState(null);
     const takePicture = async () => {
         if(camera){
             const data = await camera.takePictureAsync(null);
@@ -41,10 +40,8 @@ export default function App() {
             quality: 1,
         });
 
-        console.log(result);
-
-        if (!result.canceled) {
-            setImage(result.assets[0].uri);
+        if (result) {
+            setImageTaken(result.assets[0].uri);
         }
     };
 
