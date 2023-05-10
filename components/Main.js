@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {fetchUser, fetchUserPosts} from "../redux/actions/index";
+import {fetchUser, fetchUserFollowing, fetchUserPosts} from "../redux/actions/index";
 import {Text, View} from "react-native";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
@@ -21,6 +21,7 @@ export class Main extends Component {
     componentDidMount() {
         this.props.fetchUser();
         this.props.fetchUserPosts();
+        this.props.fetchUserFollowing();
     }
 
     render() {
@@ -77,6 +78,6 @@ const mapStateToProps = (store) => ({
     currentUser: store.userState.currentUser
 })
 
-const mapDispatchProps = (dispatch) => bindActionCreators({fetchUser, fetchUserPosts}, dispatch)
+const mapDispatchProps = (dispatch) => bindActionCreators({fetchUser, fetchUserPosts, fetchUserFollowing}, dispatch)
 
 export default connect(mapStateToProps, mapDispatchProps)(Main);

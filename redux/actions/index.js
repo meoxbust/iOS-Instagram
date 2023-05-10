@@ -1,4 +1,4 @@
-import {USER_POST_STATE_CHANGE, USER_STATE_CHANGE} from "../constants";
+import {USER_FOLLOWING_STATE_CHANGE, USER_POST_STATE_CHANGE, USER_STATE_CHANGE} from "../constants";
 import firebase from "firebase/compat";
 
 export function fetchUser() {
@@ -40,5 +40,20 @@ export function fetchUserPosts() {
             .catch(error => {
                 console.error("Error getting user document:", error);
             });
+    };
+}
+
+export function fetchUserFollowing() {
+    return dispatch => {
+        firebase.firestore()
+            .collection("following")
+            .doc(firebase.auth().currentUser.uid)
+            .collection("userFollowing")
+            .onSnapshot(snapshot => {
+                let following = snapshot.docs.map(doc => {
+                    return doc.id;
+                })
+                dispatch({type: USER_FOLLOWING_STATE_CHANGE, following })
+            })
     };
 }
