@@ -52,7 +52,7 @@ function Profile(props){
         }else{
             setFollowing(false)
         }
-    }, [props.route.params.uid, props.following])
+    }, [props.route.params.uid, props.following, props.posts])
     if(user === null)
     {
         return <></>

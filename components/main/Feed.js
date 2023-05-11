@@ -6,9 +6,7 @@ function Feed(props){
     const [posts, setPosts] = useState([])
     useEffect(() => {
         let posts = [];
-        console.log(props.usersLoaded)
-        console.log(props.following.length)
-        if (props.usersLoaded === (props.following.length ?? 0)) {
+        if (props.usersFollowingLoaded === (props.following.length ?? 0)) {
             for(let i = 0; i<props.following.length; i++)
             {
                 const user = props.users.find(el => el.uid === props.following[i])
@@ -21,7 +19,7 @@ function Feed(props){
             })
             setPosts(posts)
         }
-    }, [props.usersLoaded])
+    }, [props.usersFollowingLoaded])
     return (
         <View style={styles.container}>
             <View style={styles.containerGallery}>
@@ -33,6 +31,13 @@ function Feed(props){
                         <View style={styles.containerImages}>
                             <Text style={styles.container}>{item.user.name}</Text>
                             <Image style={styles.image} source={{uri: item.downloadUrl}}/>
+                            <Text
+                                onPress={() => {
+                                    props.navigation.navigate("Comment", {postId: item.id, uid: item.user.uid})
+                                }}
+                            >
+                                View comments...
+                            </Text>
                         </View>
                     )
                     }
@@ -46,7 +51,7 @@ const mapStateToProps = (store) => ({
     currentUser: store.userState.currentUser,
     following: store.userState.following,
     users: store.usersState.users,
-    usersLoaded: store.usersState.usersLoaded
+    usersFollowingLoaded: store.usersState.usersFollowingLoaded
 })
 
 export default connect(mapStateToProps, null)(Feed);

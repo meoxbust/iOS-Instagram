@@ -2,10 +2,13 @@ import React, {useState} from "react";
 import {Button, Image, TextInput, View} from "react-native";
 import firebase from "firebase/compat";
 import {NavigationContainer} from "@react-navigation/native";
+import {bindActionCreators} from "redux";
+import {connect} from "react-redux";
+import {fetchUserPosts} from "../../redux/actions";
 
 require("firebase/compat/firestore")
 require("firebase/compat/storage")
-export default function Save(props, {navigation}){
+export function Save(props, {navigation}){
     const imageUrl = props.route.params.imageTaken;
     const [caption, setCaption] = useState("");
     const uploadImage = async () => {
@@ -39,6 +42,7 @@ export default function Save(props, {navigation}){
                 caption,
                 creation: firebase.firestore.FieldValue.serverTimestamp()
         }).then((function (){
+            props.fetchUserPosts();
             props.navigation.popToTop();
         }))
     }
@@ -53,3 +57,6 @@ export default function Save(props, {navigation}){
         </View>
     )
 }
+
+const mapDispatchProps = (dispatch) => bindActionCreators({ fetchUserPosts }, dispatch);
+export default connect(null, mapDispatchProps)(Save);

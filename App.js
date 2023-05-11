@@ -16,6 +16,7 @@ import thunk from "redux-thunk";
 import {auth} from "./components/config/firebaseConfig";
 import AddScreen from "./components/main/Add";
 import SaveScreen from "./components/main/Save";
+import CommentScreen from "./components/main/Comment";
 
 
 const store = createStore(rootReducer, applyMiddleware(thunk))
@@ -93,6 +94,12 @@ export class App extends Component{
                         <Stack.Screen
                             name="Save"
                             component={SaveScreen}
+                            navigation={this.props.navigation}
+                        />
+                        <Stack.Screen
+                            name="Comment"
+                            component={CommentScreen}
+                            navigation={this.props.navigation}
                         />
                     </Stack.Navigator>
                 </NavigationContainer>
