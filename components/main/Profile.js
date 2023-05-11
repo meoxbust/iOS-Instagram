@@ -77,6 +77,10 @@ function Profile(props){
             .delete().then(() => console.log("Unfollow successfully"))
     }
 
+    const onLogout = () => {
+        firebase.auth().signOut();
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.containerInfo}>
@@ -99,7 +103,11 @@ function Profile(props){
                                 )
                             }
                         </View>
-                    ) : null
+                    ) :
+                        <Button
+                            title={"Logout"}
+                            onPress={() => onLogout()}
+                        />
                 }
             </View>
 

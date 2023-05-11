@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {fetchUser, fetchUserFollowing, fetchUserPosts} from "../redux/actions/index";
+import {fetchUser, fetchUserFollowing, fetchUserPosts, clearData} from "../redux/actions/index";
 import {Text, View} from "react-native";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
@@ -19,6 +19,7 @@ const EmptyScreen = () => {
 }
 export class Main extends Component {
     componentDidMount() {
+        this.props.clearData();
         this.props.fetchUser();
         this.props.fetchUserPosts();
         this.props.fetchUserFollowing();
@@ -78,6 +79,6 @@ const mapStateToProps = (store) => ({
     currentUser: store.userState.currentUser
 })
 
-const mapDispatchProps = (dispatch) => bindActionCreators({fetchUser, fetchUserPosts, fetchUserFollowing}, dispatch)
+const mapDispatchProps = (dispatch) => bindActionCreators({fetchUser, fetchUserPosts, fetchUserFollowing, clearData}, dispatch)
 
 export default connect(mapStateToProps, mapDispatchProps)(Main);
