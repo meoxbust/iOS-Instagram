@@ -19,7 +19,6 @@ export default function Search(props){
                         id, ...data
                     }
                 })
-                console.log(users)
                 setUsers(users)
             })
     }

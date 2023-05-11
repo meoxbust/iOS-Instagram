@@ -9,7 +9,6 @@ function Profile(props){
     const [following, setFollowing] = useState(false)
     useEffect(() => {
         const {currentUser, posts} = props;
-        console.log({currentUser, posts})
         if(props.route.params.uid === firebase.auth().currentUser.uid)
         {
             setUser(currentUser);
@@ -75,7 +74,7 @@ function Profile(props){
             .doc(firebase.auth().currentUser.uid)
             .collection("userFollowing")
             .doc(props.route.params.uid)
-            .delete().then(() => console.log("follow successfully"))
+            .delete().then(() => console.log("Unfollow successfully"))
     }
 
     return (

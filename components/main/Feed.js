@@ -1,12 +1,73 @@
-import React from "react";
-import {SafeAreaView, Text, View} from "react-native";
-
-export default function Feed(){
-    return(
-        <SafeAreaView>
-            <View>
-                <Text>Feed</Text>
+import React, {useEffect, useState} from "react";
+import {Text, View, StyleSheet, FlatList, Image} from "react-native";
+import {connect} from "react-redux";
+require("firebase/compat/firestore")
+function Feed(props){
+    const [posts, setPosts] = useState([])
+    useEffect(() => {
+        let posts = [];
+        console.log(props.usersLoaded)
+        console.log(props.following.length)
+        if (props.usersLoaded === (props.following.length ?? 0)) {
+            for(let i = 0; i<props.following.length; i++)
+            {
+                const user = props.users.find(el => el.uid === props.following[i])
+                if(user !== undefined) {
+                    posts = [...posts, ...user.posts]
+                }
+            }
+            posts.sort((x, y) => {
+                return x.creation - y.creation;
+            })
+            setPosts(posts)
+        }
+    }, [props.usersLoaded])
+    return (
+        <View style={styles.container}>
+            <View style={styles.containerGallery}>
+                <FlatList
+                    numColumns={1}
+                    horizontal={false}
+                    data={posts}
+                    renderItem={({item}) => (
+                        <View style={styles.containerImages}>
+                            <Text style={styles.container}>{item.user.name}</Text>
+                            <Image style={styles.image} source={{uri: item.downloadUrl}}/>
+                        </View>
+                    )
+                    }
+                />
             </View>
-        </SafeAreaView>
+        </View>
     )
 }
+
+const mapStateToProps = (store) => ({
+    currentUser: store.userState.currentUser,
+    following: store.userState.following,
+    users: store.usersState.users,
+    usersLoaded: store.usersState.usersLoaded
+})
+
+export default connect(mapStateToProps, null)(Feed);
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+
+    },
+    containerInfo: {
+        margin: 20
+    },
+    containerGallery: {
+        flex: 1
+    },
+    containerImages: {
+        flex: 1,
+    },
+    image: {
+        flex: 1,
+        aspectRatio: 1,
+        margin: 2
+    },
+})
