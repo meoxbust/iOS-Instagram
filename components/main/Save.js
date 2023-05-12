@@ -40,7 +40,8 @@ export function Save(props, {navigation}){
             .add({
                 downloadUrl,
                 caption,
-                creation: firebase.firestore.FieldValue.serverTimestamp()
+                creation: firebase.firestore.FieldValue.serverTimestamp(),
+                likesCount: 0,
         }).then((function (){
             props.fetchUserPosts();
             props.navigation.popToTop();

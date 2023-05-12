@@ -31,6 +31,13 @@ function Feed(props){
             .collection("likes")
             .doc(firebase.auth().currentUser.uid)
             .set({})
+        
+        firebase.firestore()
+            .collection("posts")
+            .doc(userId)
+            .collection("userPosts")
+            .doc(postId)
+            .update({"likesCount": firebase.firestore.FieldValue.increment(1)})
     }
     const onDislikePress = (userId, postId) => {
         firebase.firestore()
@@ -41,6 +48,13 @@ function Feed(props){
             .collection("likes")
             .doc(firebase.auth().currentUser.uid)
             .delete()
+
+        firebase.firestore()
+            .collection("posts")
+            .doc(userId)
+            .collection("userPosts")
+            .doc(postId)
+            .update({"likesCount": firebase.firestore.FieldValue.increment(-1)})
     }
 
     return (
@@ -54,6 +68,7 @@ function Feed(props){
                         <View style={styles.containerImages}>
                             <Text style={styles.container}>{item.user.name}</Text>
                             <Image style={styles.image} source={{uri: item.downloadUrl}}/>
+                            <Text style={styles.container}>{item.likesCount ? item.likesCount : 0} likes</Text>
                             {item.currentUserLike ?
                                 (
                                     <Button
