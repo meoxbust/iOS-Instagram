@@ -1,9 +1,9 @@
 import React, {useState} from "react";
 import {View, Button, Text, TextInput, SafeAreaView, TouchableOpacity, Image, TouchableHighlight} from "react-native";
-import {container, form} from "../../styles";
+import {container, form} from "../styles";
 import firebase from "firebase/compat";
-import styles from "../style";
-import { colors } from "../../Theme/Colors";
+import styles from "./style";
+import { colors } from "../Theme/Colors";
 
 export default function Login(props) {
     const [email, setEmail] = useState('');

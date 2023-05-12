@@ -2,10 +2,10 @@ import React, {Component} from "react";
 import {View, Button, Text, TextInput, Image, Pressable} from "react-native";
 import {getAuth, createUserWithEmailAndPassword} from "firebase/auth";
 import {getFirestore} from "firebase/firestore";
-import {auth, db} from "../../config/firebaseConfig"
+import {auth, db} from "../config/firebaseConfig"
 import { doc, getDoc, deleteDoc, collection, addDoc } from "firebase/firestore";
 import firebase from "firebase/compat";
-import styles from "../style"
+import styles from "./style"
 export class Register extends Component {
     constructor(props) {
         super(props);
