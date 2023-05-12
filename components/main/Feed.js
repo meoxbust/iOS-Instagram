@@ -4,17 +4,9 @@ import {connect} from "react-redux";
 import firebase from "firebase/compat";
 require("firebase/compat/firestore")
 function Feed(props){
-    const [posts, setPosts] = useState([])
+    const [posts, setPosts] = useState(props.feed.map(post => ({ ...post})))
     useEffect(() => {
-        // let posts = [];
         if (props.usersFollowingLoaded === (props.following.length ?? 0)) {
-            // for(let i = 0; i<props.following.length; i++)
-            // {
-            //     const user = props.users.find(el => el.uid === props.following[i])
-            //     if(user !== undefined) {
-            //         posts = [...posts, ...user.posts]
-            //     }
-            // }
             props.feed.sort((x, y) => {
                 return x.creation - y.creation;
             })
@@ -22,8 +14,8 @@ function Feed(props){
         }
     }, [props.usersFollowingLoaded, props.feed])
 
-    const onLikePress = (userId, postId) => {
-        firebase.firestore()
+    const onLikePress = async (userId, postId) => {
+        await firebase.firestore()
             .collection("posts")
             .doc(userId)
             .collection("userPosts")
@@ -32,15 +24,27 @@ function Feed(props){
             .doc(firebase.auth().currentUser.uid)
             .set({})
         
-        firebase.firestore()
+        await firebase.firestore()
             .collection("posts")
             .doc(userId)
             .collection("userPosts")
             .doc(postId)
             .update({"likesCount": firebase.firestore.FieldValue.increment(1)})
+        setPosts((prevPosts) =>
+            prevPosts.map((post) => {
+                if (post.id === postId && post.user.uid === userId) {
+                    return {
+                        ...post,
+                        likesCount: post.likesCount + 1,
+                        currentUserLike: true,
+                    };
+                }
+                return post;
+            })
+        );
     }
-    const onDislikePress = (userId, postId) => {
-        firebase.firestore()
+    const onDislikePress = async (userId, postId) => {
+        await firebase.firestore()
             .collection("posts")
             .doc(userId)
             .collection("userPosts")
@@ -49,14 +53,27 @@ function Feed(props){
             .doc(firebase.auth().currentUser.uid)
             .delete()
 
-        firebase.firestore()
+        await firebase.firestore()
             .collection("posts")
             .doc(userId)
             .collection("userPosts")
             .doc(postId)
-            .update({"likesCount": firebase.firestore.FieldValue.increment(-1)})
+            .update({"likesCount": firebase.firestore.FieldValue.increment(-1)});
+        setPosts((prevPosts) =>
+            prevPosts.map((post) => {
+                if (post.id === postId && post.user.uid === userId) {
+                    // console.log("before: ",post)
+                    return {
+                        ...post,
+                        likesCount: post.likesCount,
+                        currentUserLike: false,
+                    };
+                }
+                // console.log("after: ",post)
+                return post;
+            })
+        );
     }
-
     return (
         <View style={styles.container}>
             <View style={styles.containerGallery}>
@@ -68,7 +85,7 @@ function Feed(props){
                         <View style={styles.containerImages}>
                             <Text style={styles.container}>{item.user.name}</Text>
                             <Image style={styles.image} source={{uri: item.downloadUrl}}/>
-                            <Text style={styles.container}>{item.likesCount ? item.likesCount : 0} likes</Text>
+                            <Text style={styles.container}>{item.likesCount} likes</Text>
                             {item.currentUserLike ?
                                 (
                                     <Button
@@ -104,7 +121,6 @@ function Feed(props){
 const mapStateToProps = (store) => ({
     currentUser: store.userState.currentUser,
     following: store.userState.following,
-    // users: store.usersState.users,
     feed: store.usersState.feed,
     usersFollowingLoaded: store.usersState.usersFollowingLoaded
 })

@@ -73,7 +73,6 @@ export function Comment(props){
             setComments(prevComments => [...prevComments, {id: '', ...newComment}]);
             setText('');
         })}
-        console.log(comments)
     return (
         <View>
             <FlatList
