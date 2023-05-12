@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 import firebase from "firebase/compat";
 require("firebase/compat/firestore")
 function Feed(props){
-    const [posts, setPosts] = useState(props.feed.map(post => ({ ...post})))
+    const [posts, setPosts] = useState(props.feed.map(post => ({ ...post, likesCount: 0})))
     useEffect(() => {
         if (props.usersFollowingLoaded === (props.following.length ?? 0)) {
             props.feed.sort((x, y) => {
@@ -33,12 +33,14 @@ function Feed(props){
         setPosts((prevPosts) =>
             prevPosts.map((post) => {
                 if (post.id === postId && post.user.uid === userId) {
+                    console.log(post.id ,"before add like: ",post.likesCount)
                     return {
                         ...post,
                         likesCount: post.likesCount + 1,
                         currentUserLike: true,
                     };
                 }
+                console.log("after add like: ",post.likesCount)
                 return post;
             })
         );
@@ -62,14 +64,14 @@ function Feed(props){
         setPosts((prevPosts) =>
             prevPosts.map((post) => {
                 if (post.id === postId && post.user.uid === userId) {
-                    // console.log("before: ",post)
+                    console.log(post.id ,"before dislike: ",post.likesCount)
                     return {
                         ...post,
                         likesCount: post.likesCount,
                         currentUserLike: false,
                     };
                 }
-                // console.log("after: ",post)
+                console.log("after dislike: ",post.likesCount)
                 return post;
             })
         );
