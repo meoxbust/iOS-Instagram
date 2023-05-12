@@ -1,7 +1,9 @@
 import React, {useState} from "react";
-import {View, Button, Text, TextInput} from "react-native";
-import {container, form} from "../styles";
+import {View, Button, Text, TextInput, SafeAreaView, TouchableOpacity, Image, TouchableHighlight} from "react-native";
+import {container, form} from "../../styles";
 import firebase from "firebase/compat";
+import styles from "../style";
+import { colors } from "../../Theme/Colors";
 
 export default function Login(props) {
     const [email, setEmail] = useState('');
@@ -11,22 +13,33 @@ export default function Login(props) {
         firebase.auth().signInWithEmailAndPassword(email, password).then(() => console.log("Sign in successfully!"))
     }
     return (
+    <SafeAreaView style={styles.container}>
+        <View style = {styles.logoContainer}>
+        <Image
+            source={require("../../../assets/insta-icon.png")}
+            style={{ height: 140, width: 140 }}
+          />
+           <Image
+            source={require("../../../assets/Instagram.png")}
+            style={{ height: 60, width: 200 }}
+          />
+         </View>
         <View style={container.center}>
             <View style={container.formCenter}>
                 <TextInput
-                    style={form.textInput}
-                    placeholder="email"
+                    style={styles.input}
+                    placeholder="Email"
                     onChangeText={(email) => setEmail(email)}
                 />
                 <TextInput
-                    style={form.textInput}
-                    placeholder="password"
+                    style={styles.input}
+                    placeholder="Password"
                     secureTextEntry={true}
                     onChangeText={(password) => setPassword(password)}
                 />
-
+  
                 <Button
-                    style={form.button}
+                    style={styles.buttonText}
                     onPress={() => onSignIn()}
                     title="Sign In"
                 />
@@ -34,13 +47,17 @@ export default function Login(props) {
 
 
             <View style={form.bottomButton}>
+            <TouchableOpacity style={styles.dontHaveAccount}>
                 <Text
                     title="Register"
                     onPress={() => props.navigation.navigate("Register")}>
-                    Don't have an account? SignUp.
+                <Text style={styles.donthaveAccountText}>Don’t have an account?</Text>
+                 <Text style={styles.signUpText}>Sign up</Text>
                 </Text>
+            </TouchableOpacity>
             </View>
         </View>
+        </SafeAreaView>
     )
 }
 
