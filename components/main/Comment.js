@@ -1,12 +1,16 @@
 import React, {useEffect, useState} from "react";
 import firebase from "firebase/compat";
-import {Button, FlatList, Text, TextInput, View} from "react-native";
+import {Button, FlatList, Text, TextInput, View, ScrollView} from "react-native";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import {fetchUsersData} from "../../redux/actions";
+import styles from "../../components/auth/style";
 require("firebase/compat/firestore")
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 export function Comment(props){
+    const [arrowUp, setArrowUp] = React.useState(false) // <--- here
+    const setShowAdvanceProfile = () => {}
     const [comments, setComments] = useState([])
     const [postId, setPostId] = useState("")
     const [text, setText] = useState("")
@@ -80,25 +84,37 @@ export function Comment(props){
                 horizontal={false}
                 data={comments}
                 renderItem={({item}) => (
-                    <View>
+                    <View style = {{flexDirection: 'row', alignItems: 'center'}}>
                         {item.user !== undefined ? (
-                            <Text>{item.user.name}</Text>
+                            <Text style = {{fontWeight: 'bold', marginLeft: 20, marginTop: 20, backgroundColor:'#e6e9ed' }}> 
+                            {item.user.name} :</Text> 
                         ): null}
-                        <Text>{item.text}</Text>
+                        <Text style = {{ marginLeft: 5, marginTop: 20}}>{item.text}</Text>
                     </View>
                 )}
-            />
-            <View>
-                <TextInput
-                    placeholder={"Write comment..."}
-                    onChangeText={(text) => setText(text)}
-                />
-                <Button
+            />          
+            <View style={{ flexDirection: 'row', alignItems: 'center' , }}>
+                <Icon name="rocket" size={24} color="#900" style={{ marginRight: 8 }} />
+                <TextInput 
+                mutiline = {true}
+                style={{width:250, backgroundColor: "#FFFFFF" , height: 40,           
+                margin: 10,
+                padding: 10,
+                paddingTop: 10,
+                borderColor: 'black',
+                borderWidth: 1,
+                borderRadius: 10
+                } }
+                placeholder= {"Write comment...."} 
+                onChangeText={(text) => setText(text)} />
+                 <Button 
+                    styles = {styles.buttonsend}
                     onPress={() => onCommentSend()}
                     title={"Send"}
                 />
-            </View>
+            </View>        
         </View>
+    
     )
 }
 

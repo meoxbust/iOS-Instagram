@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {View, Button, Text, TextInput, Image} from "react-native";
+import {View, Button, Text, TextInput, Image, Pressable} from "react-native";
 import {getAuth, createUserWithEmailAndPassword} from "firebase/auth";
 import {getFirestore} from "firebase/firestore";
 import {auth, db} from "../../config/firebaseConfig"
@@ -59,7 +59,8 @@ export class Register extends Component {
                     secureTextEntry={true}
                     onChangeText={(password) => this.setState({password})}
                 />
-                <Button onPress={() => this.onSignUp()} title="Sign Up"/>
+                   
+                <Button style = {styles.buttonText} onPress={() => this.onSignUp()} title="Sign Up"/>
             </View>
         );
     }

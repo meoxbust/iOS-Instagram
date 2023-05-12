@@ -1,6 +1,7 @@
 import { StyleSheet } from "react-native";
 import { colors } from "../Theme/Colors";
 
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -14,8 +15,9 @@ const styles = StyleSheet.create({
   input: {
     height: 40,
     borderColor: colors.borderColor,
-    borderRadius: 5,
-    borderWidth: 2,
+    borderRadius: 10,
+    borderColor: 'black',
+    borderWidth: 1,
     margin: 10,
     padding: 10,
     paddingTop: 10,
@@ -69,7 +71,16 @@ const styles = StyleSheet.create({
     lineHeight: 24,
     margin: 10,
     textAlign: 'justify'
-  }
+  },
+  signUpButton: (isValid) => (+{
+    marginLeft: 10,
+    marginRight: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    minHeight: 42,
+    borderRadius: 4,
+    backgroundColor: isValid ? "#0096F6" : "#9ACAF7",
+  }),
 });
 
 export default styles;

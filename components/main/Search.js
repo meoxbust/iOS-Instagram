@@ -28,8 +28,7 @@ export default function Search(props){
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Icon name="search" size={24} color="#900" style={{ marginRight: 8 }} />
                 <TextInput 
-                style={{width:300, backgroundColor: "#FFFFF F" , height: 40,
-               
+                style={{width:300, backgroundColor: "#FFFFF F" , height: 40,           
                 margin: 10,
                 padding: 10,
                 paddingTop: 10,
