@@ -1,9 +1,17 @@
 import React, {useEffect, useState} from "react";
-import {Text, View, StyleSheet, FlatList, Image, Button} from "react-native";
+import {Text, View, StyleSheet, FlatList, Image, Button, TouchableOpacity} from "react-native";
 import {connect} from "react-redux";
 import firebase from "firebase/compat";
 require("firebase/compat/firestore")
+import Icon from 'react-native-vector-icons/FontAwesome';
+
 function Feed(props){
+    const [isLiked, setIsLiked] = useState(false);
+  const handleLike = () => {
+    setIsLiked(!isLiked);
+    Icon 
+  };
+  
     const [posts, setPosts] = useState(props.feed.map(post => ({ ...post, likesCount: 0})))
     useEffect(() => {
         if (props.usersFollowingLoaded === (props.following.length ?? 0)) {
@@ -85,32 +93,43 @@ function Feed(props){
                     data={posts}
                     renderItem={({item}) => (
                         <View style={styles.containerImages}>
-                            <Text style={styles.container}>{item.user.name}</Text>
-                            <Image style={styles.image} source={{uri: item.downloadUrl}}/>
-                            <Text style={styles.container}>{item.likesCount} likes</Text>
+                            <View style = {styles.row}>
+                                <Image style={{ width: 20, height: 20 ,marginLeft:10 ,marginRight: 10}} resizeMode="contain" source={require('../../assets/Avatar.png')} />  
+                                <Text style={styles.UserName}>{item.user.name}</Text>
+                            </View>
+                                <Text style={styles.Caption}>  {item.caption}</Text>
+                                <Image style={styles.image} source={{uri: item.downloadUrl}}/>  
+                            <View style = {styles.row}>           
                             {item.currentUserLike ?
                                 (
-                                    <Button
-                                        title={"Dislike"}
+                                    <Icon
+                                        name = {'heart'}
+                                        size = {30}
+                                        color = 'red'
+                                        marginLeft = {10}
                                         onPress={() => onDislikePress(item.user.uid, item.id)}
                                     />
                                 )
                                 :
                                 (
-                                    <Button
-                                        title={"Like"}
+                                    <Icon
+                                       name  = {'heart-o'}
+                                       size={30}
+                                       color = 'black'
+                                       marginLeft = {10}
                                         onPress={() => onLikePress(item.user.uid, item.id)}
                                     />
                                 )
                             }
-                            <Text style={styles.container}>{item.user.name}: {item.caption}</Text>
-                            <Text
-                                onPress={() => {
+                             <Text style={{marginLeft: 5, fontSize: 20, color: 'red', fontWeight: 'bold'}}>{item.likesCount} </Text>
+                            <View style = {styles.Icon}>
+                              <TouchableOpacity  onPress={() => {
                                     props.navigation.navigate("Comment", {postId: item.id, uid: item.user.uid})
-                                }}
-                            >
-                                View comments...
-                            </Text>
+                                }}>
+                                <Icon name="comment-o" size={30} color="black"  />
+                            </TouchableOpacity>
+                            </View>
+                            </View> 
                         </View>
                     )
                     }
@@ -132,7 +151,6 @@ export default connect(mapStateToProps, null)(Feed);
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-
     },
     containerInfo: {
         margin: 20
@@ -142,10 +160,41 @@ const styles = StyleSheet.create({
     },
     containerImages: {
         flex: 1,
+        marginTop: 20
     },
     image: {
         flex: 1,
         aspectRatio: 1,
         margin: 2
     },
+    row: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    UserName:{
+        fontSize: 30,
+        fontWeight: 'bold',
+        color: 'darkgreen'
+    },
+    Heart:{
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    button: {
+        backgroundColor: '#900',
+        paddingHorizontal: 10,
+        paddingVertical: 5,
+        borderRadius: 5
+    },
+    Caption: {
+        marginLeft: 10,
+        marginTop: 2,
+        marginBottom: 10,
+        fontSize: 20
+    },
+    Icon: {
+        marginLeft: 10,
+        marginRight: 10
+    }
 })

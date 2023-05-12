@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import firebase from "firebase/compat";
-import {Button, FlatList, Text, TextInput, View, ScrollView} from "react-native";
+import {Button, FlatList, Text, TextInput, View, ScrollView, Image} from "react-native";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import {fetchUsersData} from "../../redux/actions";
@@ -85,10 +85,11 @@ export function Comment(props){
                 data={comments}
                 renderItem={({item}) => (
                     <View style = {{flexDirection: 'row', alignItems: 'center'}}>
+                        <Image style={{ marginLeft: 10, marginTop: 15, width: 18, height: 18 }} resizeMode="contain" source={require('../../assets/Avatar.png')} />  
                         {item.user !== undefined ? (
-                            <Text style = {{fontWeight: 'bold', marginLeft: 20, marginTop: 20, backgroundColor:'#e6e9ed' }}> 
+                            <Text style = {{fontWeight: 'bold', fontSize: 16, marginLeft: 10, marginTop: 20, backgroundColor:'#e6e9ed' }}> 
                             {item.user.name} :</Text> 
-                        ): null}
+                            ): null}        
                         <Text style = {{ marginLeft: 5, marginTop: 20}}>{item.text}</Text>
                     </View>
                 )}

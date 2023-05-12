@@ -8,7 +8,7 @@ import { colors } from "../Theme/Colors";
 export default function Login(props) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
+   
     const onSignIn = () => {
         firebase.auth().signInWithEmailAndPassword(email, password).then(() => console.log("Sign in successfully!"))
     }
@@ -16,11 +16,11 @@ export default function Login(props) {
     <SafeAreaView style={styles.container}>
         <View style = {styles.logoContainer}>
         <Image
-            source={require("../../../assets/insta-icon.png")}
+            source={require("../../assets/insta-icon.png")}
             style={{ height: 140, width: 140 }}
           />
            <Image
-            source={require("../../../assets/Instagram.png")}
+            source={require("../../assets/Instagram.png")}
             style={{ height: 60, width: 200 }}
           />
          </View>
@@ -37,15 +37,12 @@ export default function Login(props) {
                     secureTextEntry={true}
                     onChangeText={(password) => setPassword(password)}
                 />
-  
                 <Button
                     style={styles.buttonText}
                     onPress={() => onSignIn()}
                     title="Sign In"
                 />
             </View>
-
-
             <View style={form.bottomButton}>
             <TouchableOpacity style={styles.dontHaveAccount}>
                 <Text

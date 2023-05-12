@@ -35,11 +35,11 @@ export class Register extends Component {
             <View>
             <View style={styles.logoContainer}>
                 <Image
-                    source={require("../../../assets/insta-icon.png")}
+                    source={require("../../assets/insta-icon.png")}
                     style={{ height: 140, width: 140 }}
                   />
                   <Image
-                    source={require("../../../assets/Instagram.png")}
+                    source={require("../../assets/Instagram.png")}
                     style={{ height: 60, width: 200 }}
                 />
             </View>
