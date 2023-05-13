@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {View, Button, Text, TextInput, Image, Pressable} from "react-native";
+import {View, Button, Text, TextInput, Image, Pressable, TouchableOpacity} from "react-native";
 import {getAuth, createUserWithEmailAndPassword} from "firebase/auth";
 import {getFirestore} from "firebase/firestore";
 import {auth, db} from "../config/firebaseConfig"
@@ -44,23 +44,30 @@ export class Register extends Component {
                 />
             </View>
                 <TextInput
-                  style={styles.input}
+                  style={[styles.input, {marginTop: 20,marginLeft: 20,width: 350}]}
                     placeholder="Name"
                     onChangeText={(name) => this.setState({name})}
                 />
                 <TextInput
-                  style={styles.input}
+                  style={[styles.input, {marginLeft: 20,width: 350}]}
                     placeholder="Email"
                     onChangeText={(email) => this.setState({email})}
                 />
                 <TextInput
-                    style={styles.input}
+                    style={[styles.input, {marginLeft: 20,width: 350}]}
                     placeholder="Password"
                     secureTextEntry={true}
                     onChangeText={(password) => this.setState({password})}
                 />
                    
-                <Button style = {styles.buttonText} onPress={() => this.onSignUp()} title="Sign Up"/>
+                   <TouchableOpacity 
+                    style={[styles.BUTTON, {margin: 22}]}
+                    onPress={() => {
+                        this.onSignUp()
+                    }}
+                    >
+                    <Text style={styles.btntitle}>Sign Up</Text>
+               </TouchableOpacity>
             </View>
         );
     }

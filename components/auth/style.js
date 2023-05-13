@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 import { colors } from "../Theme/Colors";
-
+import LinearGradient from 'react-native-linear-gradient';
 
 const styles = StyleSheet.create({
   container: {
@@ -60,8 +60,8 @@ const styles = StyleSheet.create({
     marginLeft: 5,
   },
   logoContainer: {
-     alignItems: "center",
-    marginTop: 10 
+    alignItems: "center",
+    marginTop: 50 
   },
   scrollView: {
     backgroundColor: '#DDDDDD'
@@ -81,6 +81,17 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     backgroundColor: isValid ? "#0096F6" : "#9ACAF7",
   }),
+  BUTTON:{
+    marginTop: 20,
+    backgroundColor: '#ffb3a9',
+    padding: 10,
+    borderRadius: 5,
+  },
+  btntitle: {
+    color: 'black',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
 });
 
 export default styles;

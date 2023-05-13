@@ -37,11 +37,14 @@ export default function Login(props) {
                     secureTextEntry={true}
                     onChangeText={(password) => setPassword(password)}
                 />
-                <Button
-                    style={styles.buttonText}
-                    onPress={() => onSignIn()}
-                    title="Sign In"
-                />
+                <TouchableOpacity 
+                    style={styles.BUTTON}
+                    onPress={() => {
+                        onSignIn()
+                    }}
+                    >
+                    <Text style={styles.btntitle}>Sign In</Text>
+               </TouchableOpacity>
             </View>
             <View style={form.bottomButton}>
             <TouchableOpacity style={styles.dontHaveAccount}>
