@@ -6,6 +6,8 @@ import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import {fetchUserChats} from "../../redux/actions";
 import {timeDifference} from "../utils";
+import Styles from "../auth/style"
+import Icon from 'react-native-vector-icons/FontAwesome';
 require("firebase/compat/firestore")
 
 function Chat(props) {
@@ -94,7 +96,7 @@ function Chat(props) {
     return (
         <View style={[styles.container, {alignItems: "center"}]}>
             <Provider>
-                <Text>To: {props.route.params.user.name}</Text>
+                <Text style = {{fontSize: 20, fontWeight: 'bold', marginLeft: 10, marginTop: 10}}>To: {props.route.params.user.name}</Text>
                 {messages.length !== 0 ?
                     <FlatList
                         numColumns={1}
@@ -107,12 +109,12 @@ function Chat(props) {
                             }
                         }}
                         renderItem={({item}) => (
-                            <View style={[styles.container, item.creator === firebase.auth().currentUser.uid ? styles.chatRight : styles.chatLeft, {padding: 10}]}>
+                            <View style={[styles.container, item.creator === firebase.auth().currentUser.uid ? styles.chatRight : styles.chatLeft, {padding: 5}]}>
                                 {item.creator !== undefined && item.creation !== null ?
                                     <View style={styles.horizontal}>
                                         <View>
-                                            <Text style={{marginBottom: 5}}>{item.text}</Text>
-                                            <Text style={{marginBottom: 5, color: "white"}}>
+                                            <Text style={{marginBottom: 5, fontSize: 18 }}>{item.text}</Text>
+                                            <Text style={{marginBottom: 5, color: "white", fontSize: 10}}>
                                                 {timeDifference(new Date(), item.creation.toDate())}
                                                 {/* {item.creation.toDate().toJSON()} */}
                                             </Text>
@@ -123,7 +125,7 @@ function Chat(props) {
                         )}
                     />
                     :
-                    <View style={[styles.container, {alignItems: "center"}]}>
+                    <View style={[styles.container, {alignItems: "center", textAlign: 'center', justifyContent: 'center', fontSize: 20, fontWeight: 'bold'}]}>
                         <Text>No message was sent!</Text>
                     </View>
                 }
@@ -132,13 +134,14 @@ function Chat(props) {
                         <TextInput
                             value={input}
                             multiline={true}
-                            style={[styles.fillHorizontal, styles.container, styles.input]}
+                            style={ [styles.fillHorizontal, styles.container, styles.input, Styles.input]}
                             placeholder="Message..."
                             onChangeText={input => setInput(input)}/>
                         <TouchableOpacity
                             onPress={() => onSend()}
-                            style={{width: 100, alignSelf: 'center'}}>
-                            <Text style={{color: "blue"}}>Send</Text>
+                            style={{width: 40, alignSelf: 'center'}}>
+                            <Icon name="send" size={20} color="#900" />
+                            <Text style={{color: "bubble", fontWeight: 'bold', fontSize: 15}}>Send</Text>
                         </TouchableOpacity>
                     </View>
                 </View>

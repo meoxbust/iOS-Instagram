@@ -1,11 +1,12 @@
 import React, {useState} from "react";
-import {Button, Image, TextInput, View} from "react-native";
+import {Button, Image, TextInput, View,TouchableOpacity, Text} from "react-native";
 import firebase from "firebase/compat";
 import {NavigationContainer} from "@react-navigation/native";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import {fetchUserPosts} from "../../redux/actions";
-
+import styles from "../auth/style";
+import Icon from 'react-native-vector-icons/FontAwesome';
 require("firebase/compat/firestore")
 require("firebase/compat/storage")
 export function Save(props, {navigation}){
@@ -50,11 +51,20 @@ export function Save(props, {navigation}){
     return (
         <View style={{flex: 1}}>
             <Image source={{uri: imageUrl}} style={{flex: 1}} />
+            <View style = {{flexDirection: 'row', alignItems: 'center'}} >
             <TextInput
+                style ={[{ marginLeft: 10,marginBottom: 10,marginTop: 10 , borderRadius: 10 ,borderWidth: 1, borderColor: 'black', height: 80,width: 330}]}
                 placeholder={"Write a Caption..."}
+                multiline = {true}
                 onChangeText={(caption) => setCaption(caption)}
             />
-            <Button title={"Save"} onPress={() => uploadImage()}/>
+             <TouchableOpacity                           
+                            onPress={() =>  uploadImage()}
+                            style={{width: 40, alignSelf: 'center'}}>
+                            <Icon name="bookmark" marginLeft = {13} size={20} color="#900" />
+                            <Text style={{marginLeft: 10,color: "bubble", fontWeight: 'bold', fontSize: 12}}>Send</Text>
+            </TouchableOpacity>        
+            </View>
         </View>
     )
 }

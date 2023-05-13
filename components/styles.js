@@ -156,7 +156,7 @@ const container = StyleSheet.create({
     formCenter: {
         justifyContent: 'center',
         flex: 1,
-        margin: 25
+        margin:25,
     },
     containerImage: {
         flex: 1 / 3
@@ -186,7 +186,7 @@ const container = StyleSheet.create({
     chatRight: {
         margin: 10,
         marginBottom: 10,
-        backgroundColor: 'dodgerblue',
+        backgroundColor: 'Verylightcyan',
         padding: 10,
         borderRadius: 8,
         alignSelf: 'flex-end'

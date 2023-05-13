@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
   donthaveAccountText: {
     textAlign: "center",
     color: "white",
-    fontSize: 14,
+    fontSize: 13,
     color: "gray",
   },
   signUpText: {
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
   },
   logoContainer: {
      alignItems: "center",
-    marginTop: 50 
+    marginTop: 10 
   },
   scrollView: {
     backgroundColor: '#DDDDDD'

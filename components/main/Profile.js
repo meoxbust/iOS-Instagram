@@ -102,7 +102,46 @@ function Profile(props){
                     <Text style={styles.username}>{user.email}</Text>
                 </View>
             </ImageBackground>
-
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            { 
+                    props.route.params.uid !== firebase.auth().currentUser.uid ? (
+                        <View style = {{flexDirection: 'row', alignItems: 'center'}} >
+                            {
+                                following ? (
+                                    <Button
+                                        title={"Followed"}
+                                        onPress={() => onUnFollow()}
+                                    />
+                                ) : (
+                                    <Button
+                                        title={"Follow"}
+                                        onPress={() => onFollow()}
+                                    />
+                                )
+                            }
+                            <Button
+                                title={"Message"}
+                                onPress={() => {
+                                    props.navigation.navigate("Chat", {user: user, uid: props.route.params.uid})
+                                }}
+                            />
+                        </View>
+                    ) :
+                        <View>
+                            <Button
+                                title={"Chat"}
+                                onPress={() => {
+                                    props.navigation.navigate("ChatList")
+                                }}
+                            />
+                            <Button
+                                style = {styles.btlogout}
+                                title={"Logout"}
+                                onPress={() => onLogout()}
+                            />
+                        </View>
+                }
+                </ View>
             <View style={styles.statsContainer}>
                 <View style={styles.stat}>
                     <Text style={styles.statNumber}>102</Text>
@@ -139,44 +178,7 @@ function Profile(props){
                 />
             </View>
         </View>
-                {
-                    props.route.params.uid !== firebase.auth().currentUser.uid ? (
-                        <View>
-                            {
-                                following ? (
-                                    <Button
-                                        title={"Followed"}
-                                        onPress={() => onUnFollow()}
-                                    />
-                                ) : (
-                                    <Button
-                                        title={"Follow"}
-                                        onPress={() => onFollow()}
-                                    />
-                                )
-                            }
-                            <Button
-                                title={"Message"}
-                                onPress={() => {
-                                    props.navigation.navigate("Chat", {user: user, uid: props.route.params.uid})
-                                }}
-                            />
-                        </View>
-                    ) :
-                        <View>
-                            <Button
-                                title={"Chat"}
-                                onPress={() => {
-                                    props.navigation.navigate("ChatList")
-                                }}
-                            />
-                            <Button
-                                style = {styles.btlogout}
-                                title={"Logout"}
-                                onPress={() => onLogout()}
-                            />
-                        </View>
-                }
+                
             </View>
 
             <View style={styles.containerGallery}>
@@ -234,10 +236,9 @@ const styles = StyleSheet.create({
     backgroundImage: {
         flex: 1,
         width: '100%',
-        height: 225,
-        resizeMode: 'cover',
-        justifyContent: 'flex-end',
-        alignItems: 'baseline',
+        height: 150,
+       justifyContent: 'center',
+       alignItems: 'center'
     },
     backButton: {
         position: 'absolute',
@@ -251,29 +252,25 @@ const styles = StyleSheet.create({
         justifyContent: 'center',      
         flexDirection: 'column',
         alignItems: 'center',
-        marginBottom: 50,
+        marginBottom: 100
     },
     avatar: {
-        width: 125,
-        height: 125,
-        marginTop: 20,
-        left: 120,
+        width: 80,
+        height: 80,
+        marginTop: 0,
         alignItems: 'center',
         borderRadius: 62.5,
-
     },
     name: {
         alignItems: 'center',
         justifyContent: 'center',
-        left: 120,
-        fontSize: 30,
+        fontSize: 20,
         fontWeight: 'bold',
-        color: '#000',
+        color: 'red',
     },
     username: {
         alignItems: 'center',
         justifyContent: 'center',
-        left: 120,
         fontSize: 15,
         fontWeight: 'bold',
         color: '#000',

@@ -63,7 +63,7 @@ export class App extends Component{
                     <Stack.Navigator initialRouteName="Landing">
                         <Stack.Screen
                             name="Landing"
-                            component={LoginScreen}
+                            component={LandingScreen}
                             options={{ headerShown: false }}
                         />
                         <Stack.Screen
