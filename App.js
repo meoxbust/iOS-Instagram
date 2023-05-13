@@ -17,7 +17,8 @@ import {auth} from "./components/config/firebaseConfig";
 import AddScreen from "./components/main/Add";
 import SaveScreen from "./components/main/Save";
 import CommentScreen from "./components/main/Comment";
-
+import ChatListScreen from "./components/main/ChatList";
+import ChatScreen from "./components/main/Chat";
 
 const store = createStore(rootReducer, applyMiddleware(thunk))
 
@@ -99,6 +100,16 @@ export class App extends Component{
                         <Stack.Screen
                             name="Comment"
                             component={CommentScreen}
+                            navigation={this.props.navigation}
+                        />
+                        <Stack.Screen
+                            name="ChatList"
+                            component={ChatListScreen}
+                            navigation={this.props.navigation}
+                        />
+                        <Stack.Screen
+                            name="Chat"
+                            component={ChatScreen}
                             navigation={this.props.navigation}
                         />
                     </Stack.Navigator>

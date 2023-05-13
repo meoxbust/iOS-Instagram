@@ -155,13 +155,27 @@ function Profile(props){
                                     />
                                 )
                             }
+                            <Button
+                                title={"Message"}
+                                onPress={() => {
+                                    props.navigation.navigate("Chat", {user: user, uid: props.route.params.uid})
+                                }}
+                            />
                         </View>
                     ) :
-                        <Button
-                            style = {styles.btlogout}
-                            title={"Logout"}
-                            onPress={() => onLogout()}
-                        />
+                        <View>
+                            <Button
+                                title={"Chat"}
+                                onPress={() => {
+                                    props.navigation.navigate("ChatList")
+                                }}
+                            />
+                            <Button
+                                style = {styles.btlogout}
+                                title={"Logout"}
+                                onPress={() => onLogout()}
+                            />
+                        </View>
                 }
             </View>
 

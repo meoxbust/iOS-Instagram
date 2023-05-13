@@ -1,6 +1,7 @@
 import {
     USER_FOLLOWING_STATE_CHANGE,
     USER_POST_STATE_CHANGE,
+    USER_CHATS_STATE_CHANGE,
     USER_STATE_CHANGE,
     USERS_DATA_STATE_CHANGE, USERS_POSTS_STATE_CHANGE, USERS_LIKES_STATE_CHANGE,
     CLEAR_DATA
@@ -42,6 +43,33 @@ export function fetchUserPosts() {
                 dispatch({type: USER_POST_STATE_CHANGE, posts: posts});
             })
     };
+}
+
+export function fetchUserChats() {
+    return (dispatch => {
+        firebase.firestore()
+            .collection("chats")
+            .where("users", "array-contains", firebase.auth().currentUser.uid)
+            .orderBy("lastMessageTimestamp", "desc")
+            .onSnapshot(docSnapshot => {
+                let chats = docSnapshot.docs.map(doc => {
+                    const data = doc.data();
+                    const id = doc.id;
+                    return {id, ...data}
+                })
+                for (let i = 0; i < chats.length; i++) {
+                    let otherUserId;
+                    if (chats[i].users[0] === firebase.auth().currentUser.uid) {
+                        otherUserId = chats[i].users[1];
+                    }
+                    else {
+                        otherUserId = chats[i].users[0];
+                    }
+                    dispatch(fetchUsersData(otherUserId, false))
+                }
+                dispatch({type: USER_CHATS_STATE_CHANGE, chats: chats})
+            })
+    })
 }
 
 export function fetchUserFollowing() {
